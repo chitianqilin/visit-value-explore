@@ -3,7 +3,7 @@ do_plot = 0;
 optimistic = 0;
 long_horizon = 0;
 
-for mdp_name = ["GridworldSparseSimple", "GridworldSparseVerySmall", "GridworldSparseSmall"]
+for mdp_name =  ["Taxi"] %["GridworldSparseSimple", "GridworldSparseVerySmall", "GridworldSparseSmall"]
 % for mdp_name = ["DeepGridworld"]
     for trial = 1 : 50
         fprintf('%d, %d, %s, %d\n', optimistic, long_horizon, mdp_name, trial)

@@ -18,14 +18,14 @@ def shaded_plot(ax, data, x_scale=1., **kwargs):
     mu = np.mean(data, axis=0)
     std = np.std(data, axis=0)
     ci = 1.96 * std / np.sqrt(data.shape[0])
-#    ax.fill_between(x, mu - ci, mu + ci, alpha=0.2, edgecolor="none", linewidth=0, **kwargs)
+    #    ax.fill_between(x, mu - ci, mu + ci, alpha=0.2, edgecolor="none", linewidth=0, **kwargs)
     ax.plot(x, mu, linewidth=2, **kwargs)
     ax.margins(x=0)
 
 
 def add_line(name, version, ax, lc='b', ls='-', moving=1):
     data_all = []
-    for i in range(1,args.n+1):
+    for i in range(1, args.n + 1):
         f = args.folder + args.env + version + '/' + name + '_' + str(i)
         try:
             data_file = loadmat(f)[args.var].flatten()
@@ -43,12 +43,12 @@ def add_line(name, version, ax, lc='b', ls='-', moving=1):
         return
     if moving > 1:
         for i in range(data_all.shape[0]):
-           data_all[i,:] = moving_average(data_all[i,:], args.moving)
+            data_all[i, :] = moving_average(data_all[i, :], args.moving)
     x_scale = 1.
     if args.var == 'J_history':
         x_scale = 50.
     shaded_plot(ax, data_all, x_scale=x_scale, color=lc, linestyle=ls)
-    plt.ticklabel_format(style='sci', axis='x', scilimits=(0,0))
+    plt.ticklabel_format(style='sci', axis='x', scilimits=(0, 0))
     plt.xlabel('Steps')
     for tick in ax.xaxis.get_major_ticks():
         tick.label.set_fontsize(6)
@@ -58,26 +58,26 @@ def add_line(name, version, ax, lc='b', ls='-', moving=1):
         tick.set_pad(-3)
 
 
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--env', default='GridworldSparseSimple')
     parser.add_argument('--folder', default='ql/ql/res/')
     parser.add_argument('--moving', type=int, default=1)
     parser.add_argument('--n', type=int, default=20)
-    parser.add_argument('--var',  default='VC_history')
+    parser.add_argument('--var', default='VC_history')
     args = parser.parse_args()
 
     sns.set_context("paper")
-    sns.set_style('darkgrid', {'legend.frameon':True})
+    sns.set_style('darkgrid', {'legend.frameon': True})
 
     fig = plt.figure()
-    gs = gridspec.GridSpec(1,4)
+    gs = gridspec.GridSpec(1, 4)
     gs.update(wspace=0.09, hspace=0.05)
 
     alg_name = ['vv_ucb', 'vv_n', 'brlsvi', 'boot', 'boot_thom', 'ucb1', 'bonus', 'egreedy', 'random']
-    legend = ['Ours (UCB Reward)', 'Ours (Count Reward)', 'Rand. Prior (Osband 2019)', 'Bootstr. (Osband 2016a)', 'Thompson (D\'Eramo 2019)', 'UCB1 (Auer 2002)', 'Expl. Bonus (Strehl 2008)', r'$\epsilon$' + '-greedy', 'Random']
+    legend = ['Ours (UCB Reward)', 'Ours (Count Reward)', 'Rand. Prior (Osband 2019)', 'Bootstr. (Osband 2016a)',
+              'Thompson (D\'Eramo 2019)', 'UCB1 (Auer 2002)', 'Expl. Bonus (Strehl 2008)', r'$\epsilon$' + '-greedy',
+              'Random']
 
     i = 0
     if args.env == 'DeepSea50':
@@ -85,11 +85,11 @@ if __name__ == '__main__':
         for opt in ["", "_OPT"]:
             i += 1
             if i == 1:
-                ax = fig.add_subplot(1,2,i,title=t[i-1])
+                ax = fig.add_subplot(1, 2, i, title=t[i - 1])
             else:
-                ax = fig.add_subplot(1,2,i,title=t[i-1],yticklabels=[])
+                ax = fig.add_subplot(1, 2, i, title=t[i - 1], yticklabels=[])
             palette = itertools.cycle(sns.color_palette())
-            lines = itertools.cycle(["-","--",":"])
+            lines = itertools.cycle(["-", "--", ":"])
             plt.tick_params(labelsize=3)
             for alg in alg_name:
                 add_line(alg, opt, ax, moving=args.moving, lc=next(palette))
@@ -100,18 +100,19 @@ if __name__ == '__main__':
                     plt.ylabel('States Discovered')
 
     else:
-        t = ["Zero Init. & Short Hor.", "Zero Init. & Long Hor.", "Optimistic Init. & Short Hor.", "Optimistic init. & Long Hor."]
+        t = ["Zero Init. & Short Hor.", "Zero Init. & Long Hor.", "Optimistic Init. & Short Hor.",
+             "Optimistic init. & Long Hor."]
         for opt in ["", "_OPT"]:
             for hor in ["", "_LONG"]:
                 i += 1
                 if i == 1:
-                    ax = plt.subplot(gs[i-1],title=t[i-1])
+                    ax = plt.subplot(gs[i - 1], title=t[i - 1])
                 else:
-                    ax = plt.subplot(gs[i-1],title=t[i-1],yticklabels=[])
+                    ax = plt.subplot(gs[i - 1], title=t[i - 1], yticklabels=[])
                 if args.var == 'J_history' and args.env == 'GridworldSparseWall':
                     ax.set_yscale('log')
                 palette = itertools.cycle(sns.color_palette())
-                lines = itertools.cycle(["-","--",":"])
+                lines = itertools.cycle(["-", "--", ":"])
                 plt.tick_params(labelsize=3)
                 for alg in alg_name:
                     add_line(alg, opt + hor, ax, moving=args.moving, lc=next(palette))
@@ -121,7 +122,9 @@ if __name__ == '__main__':
                     else:
                         plt.ylabel('States Discovered')
 
-    env_dict = {"DeepSea50" : "Deep Sea", "Taxi" : "Taxi", "DeepGridworld" : "Deep Gridworld", "GridworldSparseWall" : "Gridworld (Wall)", "GridworldSparseSmall" : "Gridworld (Prison)", "GridworldSparseSimple" : "Gridworld (Toy)"}
+    env_dict = {"DeepSea50": "Deep Sea", "Taxi": "Taxi", "DeepGridworld": "Deep Gridworld",
+                "GridworldSparseWall": "Gridworld (Wall)", "GridworldSparseSmall": "Gridworld (Prison)",
+                "GridworldSparseSimple": "Gridworld (Toy)"}
 
     plt.suptitle(env_dict[args.env], y=0.83, x=0.98, fontsize='x-large')
 
@@ -134,4 +137,4 @@ if __name__ == '__main__':
     picsize[1] *= 0.9
     fig.set_size_inches(picsize)
 
-    plt.savefig(args.env + '_' +  args.var + ".pdf", bbox_inches='tight', pad_inches=0)
+    plt.savefig(args.env + '_' + args.var + ".pdf", bbox_inches='tight', pad_inches=0)
