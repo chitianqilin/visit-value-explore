@@ -2,7 +2,7 @@ clear all
 do_plot = 0;
 long_horizon = 0;
 optimistic = 0;
-mdp_name = ["GridworldSparseSimple"];
+mdp_name = ["Taxi"];
 % mdp_name = ["GridworldSparseSmall"];
 
 for gamma_vv = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.99, 0.99999]

@@ -71,5 +71,9 @@ while totsteps < budget
     end
     
     episode = episode + 1;
+    
+        
+    % Evaluation
+    episode_evaluation
 
 end

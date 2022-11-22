@@ -1,8 +1,8 @@
 if ~exist('trial', 'var'), trial = 2; end % Default seed
 if ~exist('do_plot', 'var'), do_plot = 0; end % No plot by default
 if ~exist('optimistic', 'var'), optimistic = 0; end
-if ~exist('long_horizon', 'var'), long_horizon = 0; end
-if ~exist('mdp_name', 'var'), mdp_name = 'GridworldSparseSmall'; end
+if ~exist('long_horizon', 'var'), long_horizon = 1; end
+if ~exist('mdp_name', 'var'), mdp_name = 'Taxi'; end
 if ~exist('deep_depth', 'var'), deep_depth = 50; end
 if ~exist('gamma_vv', 'var'), gamma_vv = 0.99; end
 
@@ -36,8 +36,10 @@ switch mdp_name
         totstates_can_visit = sum(mdp.isopen(:));
     case 'Taxi'
         mdp = Taxi; 
-        maxsteps =5000;% 33; 
-        budget = 20000; 
+
+        maxsteps = 5000; %33; %
+        budget = 20000; %2000000
+
         totstates_can_visit = sum(mdp.isopen(:)) * 2^3 - (3+2*3+1*3);
     case 'DeepSea'
         mdp = DeepSea(deep_depth); 
@@ -112,4 +114,5 @@ mkdir(setting_str)
 save_list = {'J_history', 'VC_history', ...
     'VCA', 'VC', 'VVA', 'gamma_vv', ...
     'QT', 'QB', 'gamma', ...
-    'mdp', 'maxsteps', 'budget', 'episodes_eval', 'steps_eval', 'optimistic', 'long_horizon', 'terminate_reward' };
+    'mdp', 'maxsteps', 'budget', 'episodes_eval', 'steps_eval', 'optimistic', 'long_horizon',...
+    'episode_J_history', 'episode_VC_history', 'step','step_of_episode', 'terminate_reward'};

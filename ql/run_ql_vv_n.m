@@ -10,6 +10,7 @@ VVA = zeros(nstates,nactions); % State-action visit value
 while totsteps < budget
     
     step = 0;
+    step_last_episode_end = 0;
     state = mdp.initstate(1);
     
     % Animation + print counter
@@ -73,6 +74,9 @@ while totsteps < budget
         if episode == 1, autolayout, end
     end
     
+    step_of_episode = step - step_last_episode_end;
+    % Evaluation
+    episode_evaluation
+    step_last_episode_end = step;
     episode = episode + 1;
-
 end

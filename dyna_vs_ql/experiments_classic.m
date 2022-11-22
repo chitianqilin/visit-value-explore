@@ -4,7 +4,7 @@ optimistic = 0;
 long_horizon = 0;
 deep_depth = 50;
 
-for mdp_name = ["GridworldSparseSmall", "GridworldSparseSimple"]
+for mdp_name = ["Taxi"] %["GridworldSparseSmall", "GridworldSparseSimple"]
     for trial = 1 : 20
         fprintf('%d, %d, %s, %d\n', optimistic, long_horizon, mdp_name, trial)
         for alg_name = [ ...
