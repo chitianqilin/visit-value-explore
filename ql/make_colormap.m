@@ -1,7 +1,7 @@
 clear all
 
 for list_alg = ["vv_ucb", "vv_n", "brlsvi", "boot", "ucb1", "bonus", "egreedy"]
-for list_name = ["DeepSea", "GridworldSparseSmall", "GridworldSparseWall", "DeepGridworld"]
+for list_name = ["DeepSea", "GridworldSparseSmall", "GridworldSparseWall", "DeepGridworld"] %["Taxi"]
 seed = 9;
 
 mdp_name = char(list_name);
@@ -13,7 +13,7 @@ if strcmp(mdp_name,'DeepSea')
     mdp_name = 'DeepSea50';
 end
 
-load(['ql\res\' mdp_name '\' alg '_' num2str(seed) '.mat'])
+load(fullfile('ql','res', mdp_name, [alg '_' num2str(seed) '.mat']));
 
 close all
 

@@ -1,4 +1,4 @@
-function J = evaluate_policies(mdp, episodes, maxsteps, policies, contexts)
+function [J,terminate_reward] = evaluate_policies(mdp, episodes, maxsteps, policies, contexts)
 % EVALUATE_POLICIES Evaluates a set of policies. For each policy, several 
 % episodes are simulated.
 % The function is very similar to COLLECT_SAMPLES, but it accepts many
@@ -67,9 +67,10 @@ while ( (step < maxsteps) && sum(ongoing) > 0 )
     ongoing(ongoing) = ~terminal;
     
 end
+terminate_reward = reward;
 
 % If we are in the average reward setting, then normalize the return
-if mdp.isAveraged && mdp.gamma == 1, J = bsxfun(@times, J, 1 ./ endingstep); end
+if mdp.isAveraged && mdp.gamma == 1, J = bsxfun(@times, Jt, 1 ./ endingstep); end
 
 J = permute( mean( reshape(J,[mdp.dreward episodes npolicy]), 2), [1 3 2] );
 

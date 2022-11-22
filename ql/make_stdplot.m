@@ -7,12 +7,12 @@ figure(id)
 %%
 variable = 'J_history';
 % variable = 'VC_history';
-
-env = 'GridworldSparseSimple';
-env = 'GridworldSparseSmall';
-env = 'DeepGridworld';
-% env = 'Taxi';
-env = 'DeepSea50';
+% 
+% env = 'GridworldSparseSimple';
+% env = 'GridworldSparseSmall';
+% env = 'DeepGridworld';
+env = 'Taxi';
+%env = 'DeepSea50';
 % env = 'GridworldSparseWall';
 
 filenames = {'vv_n', 'vv_ucb', 'boot', 'boot_thom', 'brlsvi', 'ucb1', 'bonus', 'egreedy', 'random'};

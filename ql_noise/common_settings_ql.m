@@ -87,6 +87,7 @@ lrate = 0.1;
 bsize = 1024; % Batch size for bootstrapping algorithms
 
 J_history = [];
+terminate_reward = [];
 
 setting_str = ['ql/res/' char(mdp_name) '_STOC'];
 if optimistic, setting_str = [setting_str '_OPT']; end

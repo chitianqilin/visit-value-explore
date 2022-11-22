@@ -1,1 +1,12 @@
 *.mat
+Taxi_J_history.pdf
+Taxi_VC_history.pdf
+.idea/.gitignore
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/visit-value-explore.iml
+.idea/inspectionProfiles/profiles_settings.xml
+plot/MPTaxi.pdf
+plot/MPTaxi.svg
+plot/MPTaxi.fig

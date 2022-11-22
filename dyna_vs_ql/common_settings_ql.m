@@ -2,6 +2,7 @@ if ~exist('trial', 'var'), trial = 2; end % Default seed
 if ~exist('do_plot', 'var'), do_plot = 0; end % No plot by default
 if ~exist('optimistic', 'var'), optimistic = 0; end
 if ~exist('long_horizon', 'var'), long_horizon = 0; end
+if ~exist('long_horizon_rate', 'var'), long_horizon_rate = 2; end
 if ~exist('mdp_name', 'var'), mdp_name = 'GridworldSparseSmall'; end
 if ~exist('deep_depth', 'var'), deep_depth = 50; end
 if ~exist('gamma_vv', 'var'), gamma_vv = 0.99; end
@@ -46,7 +47,9 @@ switch mdp_name
         totstates_can_visit = sum(1:mdp.N) * 2;
         long_horizon = 0; % Horizon is fixed to the size of the environment
 end
-if long_horizon, maxsteps = 2 * maxsteps; end
+if long_horizon
+    maxsteps = round(long_horizon_rate * maxsteps); 
+end
 
 gamma = 0.99;
 mdp.gamma = gamma;
@@ -101,7 +104,7 @@ if strcmp(mdp_name, 'DeepSea'), episodes_eval = 2; end % 1 bomb, 1 treasure
 steps_eval = maxsteps;
 
 policy_eval.drawAction = @(s)randi(nactions, 1, size(s,2));
-J_history = evaluate_policies(mdp, episodes_eval, steps_eval, policy_eval);
+[J_history, terminate_reward] = evaluate_policies(mdp, episodes_eval, steps_eval, policy_eval);
 
 setting_str = ['ql/res/' char(mdp_name)];
 if strcmp('DeepSea', mdp_name), setting_str = [setting_str num2str(mdp.N)]; end
@@ -112,4 +115,4 @@ mkdir(setting_str)
 save_list = {'J_history', 'VC_history', ...
     'VCA', 'VC', 'VVA', 'gamma_vv', ...
     'QT', 'QB', 'gamma', ...
-    'mdp', 'maxsteps', 'budget', 'episodes_eval', 'steps_eval', 'optimistic', 'long_horizon'};
+    'mdp', 'maxsteps', 'budget', 'episodes_eval', 'steps_eval', 'optimistic', 'long_horizon', 'terminate_reward' };

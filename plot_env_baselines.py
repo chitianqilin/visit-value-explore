@@ -60,8 +60,8 @@ def add_line(name, version, ax, lc='b', ls='-', moving=1):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--env', default='Taxi')
-    parser.add_argument('--folder', default='ql/ql/res/')
+    parser.add_argument('--env', default='GridworldSparseSimple')
+    parser.add_argument('--folder', default='ql/res/')
     parser.add_argument('--moving', type=int, default=1)
     parser.add_argument('--n', type=int, default=20)
     parser.add_argument('--var', default='VC_history')
@@ -75,7 +75,7 @@ if __name__ == '__main__':
     gs.update(wspace=0.09, hspace=0.05)
 
     alg_name = ['vv_ucb', 'vv_n', 'brlsvi', 'boot', 'boot_thom', 'ucb1', 'bonus', 'egreedy', 'random']
-    legend = ['Ours (UCB Reward)', 'Ours (Count Reward)', 'Rand. Prior (Osband 2019)', 'Bootstr. (Osband 2016a)',
+    legend = ['UCB Reward (Parisi 2019)', 'Count Reward (Parisi 2019)', 'Rand. Prior (Osband 2019)', 'Bootstr. (Osband 2016a)',
               'Thompson (D\'Eramo 2019)', 'UCB1 (Auer 2002)', 'Expl. Bonus (Strehl 2008)', r'$\epsilon$' + '-greedy',
               'Random']
 
